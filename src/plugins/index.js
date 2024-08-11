@@ -3,6 +3,7 @@ import { loadFonts } from './webfontloader';
 import errorHandler from './errorHandler';
 import vuetify from './vuetify';
 import router from './router';
+import rules from './rules';
 import moment from 'moment';
 import store from './store';
 
@@ -18,10 +19,7 @@ export function registerPlugins(app) {
         .use({
             install: (app) => {
                 app.provide('errorHandler', errorHandler);
-                app.provide('rules', {
-                    required: (value) => !!value || 'This field is required.',
-                    isEmail: (value) => !value || /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value) || 'Must be valid email'
-                });
+                app.provide('rules', rules);
 
                 app.config.globalProperties.$formatDate = (timestamp, format = 'lll') => {
                     if (timestamp === undefined || timestamp === null) return '';

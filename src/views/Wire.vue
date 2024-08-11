@@ -1,6 +1,4 @@
 <template>
-
-
     <v-card
         rounded="0"
         class="fill-height"
@@ -12,8 +10,6 @@
             :height="11"
             class="mt-1"
         ></v-progress-linear>
-
-
 
         <v-window
             v-if="!isLoading"
@@ -32,55 +28,31 @@
                     justify="center"
                 >
                     <v-col
-                        lg="4"
+                        lg="3"
                         md="6"
                         xs="12"
                     >
-                        <component :is="stage"></component>
-                        <!-- @update:isValid="(isValid) => isValid" -->
-                    </v-col>
-                </v-row>
-            </v-window-item>
-            <v-window-item
-                class="fill-height"
-                align-self="center"
-            >
-                <v-row
-                    class="fill-height"
-                    align="center"
-                    justify="center"
-                >
-                    <v-col
-                        md="3"
+                        <!-- <v-col
+                        lg="12"
+                        md="12"
                         xs="12"
-                    >
-                        <v-card
-                            class="w-100"
-                            elevation="0"
-                        >
-                            <v-card-text>
-                                <p class="text-medium-emphasis">
-                                    PDF Viewer
-                                </p>
-                            </v-card-text>
-                        </v-card>
+                    > -->
+                        <component
+                            :is="stage"
+                            @next="next"
+                        ></component>
                     </v-col>
                 </v-row>
             </v-window-item>
         </v-window>
 
         <v-card-actions class="v-card-actions--bottom justify-space-between">
-            <v-btn
-                variant="text"
-                size="x-large"
-                :disabled="stage === 0"
-                @click="back"
-            >Back</v-btn>
+            <v-spacer></v-spacer>
             <v-item-group
                 v-model="stage"
                 class="text-center"
                 mandatory
-                v-if="!xs"
+                v-if="xs !== true && stage !== stages.length - 1"
             >
                 <v-item
                     v-for="n in stages.length"
@@ -94,76 +66,57 @@
                     ></v-btn>
                 </v-item>
             </v-item-group>
-            <v-btn
-                v-if="stage <= stages.length - 1"
-                variant="flat"
-                color="primary"
-                @click="next"
-                :disabled="!isValid || isLoading"
-                :loading="isLoading"
-                size="x-large"
-            >
-                Next
-            </v-btn>
-            <v-btn
-                v-else
-                variant="flat"
-                color="primary"
-                size="x-large"
-            >
-                Download
-            </v-btn>
+            <v-spacer></v-spacer>
         </v-card-actions>
     </v-card>
 </template>
 
 <script setup>
-import { useNotification } from '@kyvg/vue3-notification';
-import { ref, inject, onMounted, computed, watch } from 'vue';
+import { ref, onMounted, computed, watch } from 'vue';
 import { useDisplay } from 'vuetify';
 
 // Stages
-import Name from './../components/Name.vue';
-import AccountNumber from './../components/AccountNumber.vue';
-import Address from './../components/Address.vue';
+import Welcome from './../components/Welcome.vue';
+import Amount from './../components/Amount.vue';
+import Reason from './../components/Reason.vue';
+import CustomerName from './../components/CustomerName.vue';
+import CustomerOccupation from './../components/CustomerOccupation.vue';
+import CustomerAccountNumber from './../components/CustomerAccountNumber.vue';
+import CustomerAddress from './../components/CustomerAddress.vue';
+import BeneficiaryName from './../components/BeneficiaryName.vue';
+import BeneficiaryAddress from './../components/BeneficiaryAddress.vue';
+import BeneficiaryOccupation from './../components/BeneficiaryOccupation.vue';
+import ReceivingBank from './../components/ReceivingBank.vue';
+import BeneficiaryBank from './../components/BeneficiaryBank.vue';
+import IntermediaryBank from './../components/IntermediaryBank.vue';
+import CreditUnderAdviceAccountNumber from './../components/CreditUnderAdviceAccountNumber.vue';
+import Output from './../components/Output.vue';
 
-
-const { sm, xs } = useDisplay();
-const { notify } = useNotification();
-const errorHandler = inject('errorHandler');
-const rules = inject('rules');
+const { xs } = useDisplay();
 
 const isLoading = ref(false);
-const language = ref('EN');
-const stage = ref(0);
+const stage = ref(14);
 const stages = [
-    Name,
-    AccountNumber,
-    Address
+    Welcome,
+    Amount,
+    Reason,
+    CustomerName,
+    CustomerOccupation,
+    CustomerAccountNumber,
+    CustomerAddress,
+    BeneficiaryName,
+    BeneficiaryAddress,
+    BeneficiaryOccupation,
+    ReceivingBank,
+    BeneficiaryBank,
+    IntermediaryBank,
+    CreditUnderAdviceAccountNumber,
+    Output,
 ];
 
 const percentageComplete = computed(() => {
+    if (stage.value === stages.length - 1) return 100;
     return ((stage.value) / stages.length) * 100;
-});
-
-
-const isValid = computed(() => {
-    return true;
-
-    switch (stage.value) {
-        case 0:
-            return (/^\d{6}$/gm.test(verificationCode.value));
-        case 1:
-            return isValidAddress.value;
-        case 2:
-            return true;
-        default:
-            return false;
-    }
-});
-
-watch(stage, (value) => {
-    // if (value === 2) initStripe();
 });
 
 const next = () => {
