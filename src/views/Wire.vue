@@ -95,7 +95,7 @@ import Output from './../components/Output.vue';
 const { xs } = useDisplay();
 
 const isLoading = ref(false);
-const stage = ref(14);
+const stage = ref(0);
 const stages = [
     Welcome,
     Amount,
