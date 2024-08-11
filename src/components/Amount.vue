@@ -23,7 +23,7 @@
                     color="primary"
                     size="large"
                     :disabled="!isValid"
-                    @click="emit('next')"
+                    @click="onClickNext"
                 >
                     Next
                 </v-btn>
@@ -35,9 +35,11 @@
 <script setup>
 import { ref, defineEmits, inject } from 'vue';
 import BN from 'bignumber.js';
+import { useStore } from 'vuex';
 
 const rules = inject('rules');
 const emit = defineEmits(['next']);
+const store = useStore();
 
 const amount = ref('');
 const isValid = ref(false);
@@ -48,4 +50,9 @@ const formatToTwoDecimals = () => {
     if (amount.value) amount.value = parseFloat(amount.value).toFixed(2);
     if (isNaN(amount.value)) amount.value = '0.00';
 };
+
+const onClickNext = () => {
+    store.commit('setAmount', amount.value);
+    emit('next');
+};  
 </script>

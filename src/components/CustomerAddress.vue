@@ -4,7 +4,7 @@
         elevation="0"
     >
         <v-card-text>
-            <h1>Address</h1>
+            <h1>Your Address</h1>
             <p class="text-subtitle-1 mb-4">Enter the address associated with this account.</p>
             <v-form v-model="isValid">
                 <v-text-field
@@ -49,7 +49,7 @@
                     color="primary"
                     size="large"
                     :disabled="!isValid"
-                    @click="emit('next')"
+                    @click="onClickNext"
                 >
                     Next
                 </v-btn>
@@ -63,6 +63,9 @@ import { ref, defineEmits, inject } from 'vue';
 
 const rules = inject('rules');
 const emit = defineEmits(['next']);
+import { useStore } from 'vuex';
+
+const store = useStore();
 
 const isValid = ref(false);
 const addressLine1 = ref('');
@@ -72,4 +75,15 @@ const zipcode = ref('');
 const state = ref('Puerto Rico');
 
 const isValidZipCode = (value) => (!value || /^[0-9]{5}$/.test(value) || 'Enter a valid zip code');
+
+const onClickNext = () => {
+    store.commit('setCustomerAddress', {
+        addressLine1: addressLine1.value,
+        addressLine2: addressLine2.value,
+        city: city.value,
+        zipcode: zipcode.value,
+        state: state.value,
+    });
+    emit('next');
+}; 
 </script>

@@ -49,7 +49,7 @@
                     color="primary"
                     size="large"
                     :disabled="!isValid"
-                    @click="emit('next')"
+                    @click="onClickNext"
                 >
                     Next
                 </v-btn>
@@ -61,9 +61,11 @@
 <script setup>
 import { ref, defineEmits, inject } from 'vue';
 import helpers from '@/plugins/helpers';
+import { useStore } from 'vuex';
 
 const rules = inject('rules');
 const emit = defineEmits(['next']);
+const store = useStore();
 
 const isValid = ref(false);
 const addressLine1 = ref('');
@@ -73,4 +75,15 @@ const zipcode = ref('');
 const state = ref('Puerto Rico');
 
 const isValidZipCode = (value) => (!value || /^[0-9]{5}$/.test(value) || 'Enter a valid zip code');
+
+const onClickNext = () => {
+    store.commit('setBeneficiaryAddress', {
+        addressLine1: addressLine1.value,
+        addressLine2: addressLine2.value,
+        city: city.value,
+        zipcode: zipcode.value,
+        state: state.value,
+    });
+    emit('next');
+}; 
 </script>

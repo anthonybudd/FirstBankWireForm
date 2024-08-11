@@ -20,7 +20,7 @@
                     color="primary"
                     size="large"
                     :disabled="!isValid"
-                    @click="emit('next')"
+                    @click="onClickNext"
                 >
                     Next
                 </v-btn>
@@ -31,10 +31,17 @@
 
 <script setup>
 import { ref, defineEmits, inject } from 'vue';
+import { useStore } from 'vuex';
 
 const rules = inject('rules');
 const emit = defineEmits(['next']);
+const store = useStore();
 
 const isValid = ref(false);
 const reason = ref('');
+
+const onClickNext = () => {
+    store.commit('setReason', reason.value);
+    emit('next');
+}; 
 </script>
