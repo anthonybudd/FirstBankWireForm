@@ -3,7 +3,9 @@
     <img src="https://raw.githubusercontent.com/anthonybudd/FirstBankWireForm/master/src/assets/logo.png?v=1">
 </p>
 
-I made this form to make it easier for me to make wire transfers from First Bank because for some insane reason, First Bank customers can't make wire transfers from their app in 2024.
+This form is for me to make wire transfers from FirstBank. I made this form because, dispite the fact it's 2024, First Bank customers can't make wire transfers from their app for some insane reason.
+
+# [FirstBankWireForm.AnthonyBudd.io](https://firstbankwireform.anthonybudd.io)
 
 ```sh
 git clone git@github.com:anthonybudd/FirstBankWireForm
@@ -13,7 +15,3 @@ npm run dev
 
 open http://localhost:3000
 ```
-
-# Todo
-Make array of components
-pdf generator
