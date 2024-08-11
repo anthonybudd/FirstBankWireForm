@@ -72,7 +72,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed, watch } from 'vue';
+import { ref, computed } from 'vue';
 import { useDisplay } from 'vuetify';
 
 // Stages
@@ -121,10 +121,6 @@ const percentageComplete = computed(() => {
 
 const next = () => {
     stage.value = stage.value + 1;
-};
-
-const back = () => {
-    stage.value = stage.value - 1;
 };
 </script>
 
