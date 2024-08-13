@@ -87,10 +87,10 @@ const generatePDF = () => {
     pdf.text(`${state.beneficiaryBank.ABA}`, 44, 160);
     if (state.sameRecievingAndBenificiaryBank || state.receivingBank.ABA == state.beneficiaryBank.ABA) pdf.text(`x`, 145, 164);
 
-    pdf.text(state.intermediaryBank.bankName, 30, 175);
-    pdf.text(`${state.intermediaryBank.addressLine1}, ${state.intermediaryBank.addressLine2}`, 30, 179);
-    pdf.text(`${state.intermediaryBank.city}, ${state.intermediaryBank.state}, ${state.intermediaryBank.zipcode}`, 30, 182.5);
-    pdf.text(`${state.intermediaryBank.ABA}`, 44, 186);
+    if (state.intermediaryBank.bankName) pdf.text(state.intermediaryBank.bankName, 30, 175);
+    if (state.intermediaryBank.addressLine1) pdf.text(`${state.intermediaryBank.addressLine1}, ${state.intermediaryBank.addressLine2}`, 30, 179);
+    if (state.intermediaryBank.city) pdf.text(`${state.intermediaryBank.city}, ${state.intermediaryBank.state}, ${state.intermediaryBank.zipcode}`, 30, 182.5);
+    if (state.intermediaryBank.ABA) pdf.text(`${state.intermediaryBank.ABA}`, 44, 186);
 
     pdf.text(`${state.reason}`, 30, 195);
     pdf.text(`${state.beneficiaryAccountNumber}`, 95, 208);

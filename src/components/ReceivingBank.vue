@@ -175,6 +175,17 @@ const onClickNext = () => {
         ABA: ABA.value
     });
     store.commit('setSameRecievingAndBenificiaryBank', sameRecievingAndBenificiaryBank.value);
+    if (sameRecievingAndBenificiaryBank.value) {
+        store.commit('setBeneficiaryBank', {
+            bankName: bankName.value,
+            addressLine1: addressLine1.value,
+            addressLine2: addressLine2.value,
+            city: city.value,
+            zipcode: zipcode.value,
+            state: state.value,
+            ABA: ABA.value
+        });
+    }
     emit('next');
 };
 </script>
