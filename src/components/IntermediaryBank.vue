@@ -5,7 +5,16 @@
     >
         <v-card-text>
             <h1>Intermediary Bank</h1>
-            <p class="text-subtitle-1 mb-4">If applicable enter the intermediary banks full address or click skip.</p>
+            <p class="text-subtitle-1 mb-2">If applicable enter the intermediary banks full address or click skip.</p>
+            <v-btn
+                block
+                color="primary"
+                size="small"
+                class="mb-4"
+                @click="onClickSkip"
+            >
+                Skip
+            </v-btn>
 
             <v-row class="mb-2">
                 <v-col cols="4">

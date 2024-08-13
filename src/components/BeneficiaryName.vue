@@ -15,7 +15,7 @@
             >
                 <v-text-field
                     v-model="beneficiaryName"
-                    :rules="[rules.required, rules.isFullName]"
+                    :rules="[rules.required]"
                     placeholder="Beneficiary Name"
                     variant="outlined"
                 ></v-text-field>

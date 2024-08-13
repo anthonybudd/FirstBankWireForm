@@ -165,7 +165,7 @@ const onClickSetBank = (bank) => {
 };
 
 const onClickNext = () => {
-    store.commit('setRecievingBank', {
+    store.commit('setReceivingBank', {
         bankName: bankName.value,
         addressLine1: addressLine1.value,
         addressLine2: addressLine2.value,

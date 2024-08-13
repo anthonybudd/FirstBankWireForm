@@ -13,7 +13,7 @@
                 <v-text-field
                     v-model="name"
                     placeholder="Your Name"
-                    :rules="[rules.required, rules.isFullName]"
+                    :rules="[rules.required]"
                     variant="outlined"
                     validate-on="input lazy"
                 ></v-text-field>
