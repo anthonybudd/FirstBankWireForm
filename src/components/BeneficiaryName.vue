@@ -9,7 +9,10 @@
                 Enter the name of the person who is receiving this wire. If the beneficiary is a business, enter the
                 name of the business.
             </p>
-            <v-form v-model="isValid">
+            <v-form
+                @submit.prevent="(e) => e.preventDefault()"
+                v-model="isValid"
+            >
                 <v-text-field
                     v-model="beneficiaryName"
                     :rules="[rules.required, rules.isFullName]"

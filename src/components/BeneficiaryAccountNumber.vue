@@ -4,29 +4,28 @@
         elevation="0"
     >
         <v-card-text>
-            <h1>Credit Under Advice Account Number</h1>
-            <p class="text-subtitle-1 mb-4">Check the checkbox to credit under advice account number</p>
-            <v-form v-model="isValid">
-                <v-checkbox
-                    v-model="shouldCreditUnderAdviceAccountNumber"
-                    label="Credit Under Advice Account Number"
-                ></v-checkbox>
+            <h1>Beneficiary Account Number</h1>
+            <p class="text-subtitle-1 mb-4">
+                Enter the account number of the person who is receiving this wire.
+            </p>
+            <v-form
+                @submit.prevent="(e) => e.preventDefault()"
+                v-model="isValid"
+            >
                 <v-text-field
-                    v-if="shouldCreditUnderAdviceAccountNumber"
                     v-model="accountNumber"
                     placeholder="Account Number"
+                    variant="outlined"
                     :rules="[rules.required, rules.isValidAccountNumber]"
                     :suffix="`${accountNumberLength}/10`"
                     @input="sanitizeAccountNumber"
-                    variant="outlined"
-                    validate-on="input lazy"
                 ></v-text-field>
                 <v-btn
                     block
                     color="primary"
                     size="large"
                     :disabled="!isValid"
-                    @click="emit('next')"
+                    @click="onClickNext"
                 >
                     Next
                 </v-btn>
@@ -37,17 +36,23 @@
 
 <script setup>
 import { ref, defineEmits, inject, computed } from 'vue';
+import { useStore } from 'vuex';
 
 const rules = inject('rules');
 const emit = defineEmits(['next']);
 
 const isValid = ref(false);
-const shouldCreditUnderAdviceAccountNumber = ref(false);
 const accountNumber = ref('');
+const store = useStore();
 
 const accountNumberLength = computed(() => accountNumber.value.length);
 
 const sanitizeAccountNumber = () => {
     if (accountNumber.value) accountNumber.value = accountNumber.value.replace(/\D/g, '').substring(0, 10);
-};  
+};
+
+const onClickNext = () => {
+    store.commit('setBeneficiaryAccountNumber', accountNumber.value);
+    emit('next');
+};
 </script>

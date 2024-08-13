@@ -1,9 +1,8 @@
-import ReceivingBank from '@/components/ReceivingBank.vue';
 import { createStore } from "vuex";
 
 export default createStore({
     state: {
-        amount: '0.00',
+        amount: '',
         reason: '',
         customerName: '',
         customerOccupation: '',
@@ -17,6 +16,7 @@ export default createStore({
         },
 
         beneficiaryName: '',
+        beneficiaryAccountNumber: '',
         beneficiaryAddress: {
             addressLine1: '',
             addressLine2: '',
@@ -26,11 +26,34 @@ export default createStore({
         },
         beneficiaryOccupation: '',
 
-        // ReceivingBank
-        // -isSame?
-        // BeneficiaryBank
-        // Intermediary
-        // Credit Under Advice
+        sameRecievingAndBenificiaryBank: false,
+        receivingBank: {
+            bankName: '',
+            addressLine1: '',
+            addressLine2: '',
+            city: '',
+            zipcode: '',
+            state: '',
+            ABA: '',
+        },
+        beneficiaryBank: {
+            bankName: '',
+            addressLine1: '',
+            addressLine2: '',
+            city: '',
+            zipcode: '',
+            state: '',
+            ABA: '',
+        },
+        intermediaryBank: {
+            bankName: '',
+            addressLine1: '',
+            addressLine2: '',
+            city: '',
+            zipcode: '',
+            state: '',
+            ABA: '',
+        },
     },
     mutations: {
         setAmount(state, amount) {
@@ -56,6 +79,9 @@ export default createStore({
         setBeneficiaryName(state, beneficiaryName) {
             state.beneficiaryName = beneficiaryName;
         },
+        setBeneficiaryAccountNumber(state, beneficiaryAccountNumber) {
+            state.beneficiaryAccountNumber = beneficiaryAccountNumber;
+        },
         setBeneficiaryAddress(state, beneficiaryAddress) {
             state.beneficiaryAddress = beneficiaryAddress;
         },
@@ -64,8 +90,41 @@ export default createStore({
         },
 
 
+        setSameRecievingAndBenificiaryBank(state, sameRecievingAndBenificiaryBank) {
+            state.sameRecievingAndBenificiaryBank = sameRecievingAndBenificiaryBank;
+        },
+        setReceivingBank(state, bank) {
+            state.receivingBank = {
+                bankName: bank.bankName,
+                addressLine1: bank.addressLine1,
+                addressLine2: bank.addressLine2,
+                city: bank.city,
+                zipcode: bank.zipcode,
+                state: bank.state,
+                ABA: bank.ABA,
+            };
+        },
+        setBeneficiaryBank(state, bank) {
+            state.beneficiaryBank = {
+                bankName: bank.bankName,
+                addressLine1: bank.addressLine1,
+                addressLine2: bank.addressLine2,
+                city: bank.city,
+                zipcode: bank.zipcode,
+                state: bank.state,
+                ABA: bank.ABA,
+            };
+        },
+        setIntermediaryBank(state, bank) {
+            state.intermediaryBank = {
+                bankName: bank.bankName,
+                addressLine1: bank.addressLine1,
+                addressLine2: bank.addressLine2,
+                city: bank.city,
+                zipcode: bank.zipcode,
+                state: bank.state,
+                ABA: bank.ABA,
+            };
+        },
     },
-    getters: {
-
-    }
 });

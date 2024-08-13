@@ -6,7 +6,10 @@
         <v-card-text>
             <h1>Your Name</h1>
             <p class="text-subtitle-1 mb-4">Enter your full name as it appears on your card</p>
-            <v-form v-model="isValid">
+            <v-form
+                @submit.prevent="(e) => e.preventDefault()"
+                v-model="isValid"
+            >
                 <v-text-field
                     v-model="name"
                     placeholder="Your Name"

@@ -8,10 +8,14 @@
             <p class="text-subtitle-1 mb-4">
                 Enter the reason for this payment, e.g. "Rent", "Invoice".
             </p>
-            <v-form v-model="isValid">
+            <v-form
+                @submit.prevent="(e) => e.preventDefault()"
+                v-model="isValid"
+            >
                 <v-textarea
                     :rules="[rules.required]"
                     v-model="reason"
+                    rows="2"
                     placeholder="Reason"
                     variant="outlined"
                 ></v-textarea>

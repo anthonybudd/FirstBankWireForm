@@ -42,7 +42,7 @@
                         block
                     >
                         <v-img
-                            :width="47"
+                            :width="45"
                             :src="citiLogo"
                         ></v-img></v-btn>
                 </v-col>
@@ -50,7 +50,10 @@
 
             <v-divider class="mb-4"></v-divider>
 
-            <v-form v-model="isValid">
+            <v-form
+                @submit.prevent="(e) => e.preventDefault()"
+                v-model="isValid"
+            >
                 <v-text-field
                     v-model="bankName"
                     :rules="[rules.required]"
@@ -119,7 +122,7 @@
                     color="primary"
                     size="large"
                     :disabled="!isValid"
-                    @click="emit('next')"
+                    @click="onClickNext"
                 >
                     Next
                 </v-btn>
@@ -130,13 +133,16 @@
 
 <script setup>
 import { ref, defineEmits, inject } from 'vue';
+import helpers from "@/plugins/helpers";
+import { useStore } from 'vuex';
+
 import chaseLogo from "@/assets/chase.svg";
 import bankOfAmericaLogo from "@/assets/bank-of-america.svg";
 import citiLogo from "@/assets/citi.svg";
-import helpers from "@/plugins/helpers";
 
 const rules = inject('rules');
 const emit = defineEmits(['next']);
+const store = useStore();
 
 const isValid = ref(false);
 const bankName = ref('');
@@ -156,5 +162,19 @@ const onClickSetBank = (bank) => {
     zipcode.value = helpers.banks[bank].zipcode;
     state.value = helpers.banks[bank].state;
     ABA.value = helpers.banks[bank].ABA;
+};
+
+const onClickNext = () => {
+    store.commit('setRecievingBank', {
+        bankName: bankName.value,
+        addressLine1: addressLine1.value,
+        addressLine2: addressLine2.value,
+        city: city.value,
+        zipcode: zipcode.value,
+        state: state.value,
+        ABA: ABA.value
+    });
+    store.commit('setSameRecievingAndBenificiaryBank', sameRecievingAndBenificiaryBank.value);
+    emit('next');
 };
 </script>

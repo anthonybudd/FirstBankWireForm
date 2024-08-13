@@ -6,7 +6,10 @@
         <v-card-text>
             <h1>Your Address</h1>
             <p class="text-subtitle-1 mb-4">Enter the address associated with this account.</p>
-            <v-form v-model="isValid">
+            <v-form
+                @submit.prevent="(e) => e.preventDefault()"
+                v-model="isValid"
+            >
                 <v-text-field
                     v-model="addressLine1"
                     :rules="[rules.required]"

@@ -52,7 +52,7 @@
                 v-model="stage"
                 class="text-center"
                 mandatory
-                v-if="xs !== true && stage !== stages.length - 1"
+                v-if="xs !== true && isNotFirstOrLastPage"
             >
                 <v-item
                     v-for="n in stages.length"
@@ -74,6 +74,7 @@
 <script setup>
 import { ref, computed } from 'vue';
 import { useDisplay } from 'vuetify';
+import { useStore } from 'vuex';
 
 // Stages
 import Welcome from './../components/Welcome.vue';
@@ -84,16 +85,18 @@ import CustomerOccupation from './../components/CustomerOccupation.vue';
 import CustomerAccountNumber from './../components/CustomerAccountNumber.vue';
 import CustomerAddress from './../components/CustomerAddress.vue';
 import BeneficiaryName from './../components/BeneficiaryName.vue';
+import BeneficiaryAccountNumber from './../components/BeneficiaryAccountNumber.vue';
 import BeneficiaryAddress from './../components/BeneficiaryAddress.vue';
 import BeneficiaryOccupation from './../components/BeneficiaryOccupation.vue';
 import ReceivingBank from './../components/ReceivingBank.vue';
 import BeneficiaryBank from './../components/BeneficiaryBank.vue';
 import IntermediaryBank from './../components/IntermediaryBank.vue';
-import CreditUnderAdviceAccountNumber from './../components/CreditUnderAdviceAccountNumber.vue';
 import Output from './../components/Output.vue';
 
 const { xs } = useDisplay();
+const store = useStore();
 
+const state = store.state;
 const isLoading = ref(false);
 const stage = ref(0);
 const stages = [
@@ -105,12 +108,12 @@ const stages = [
     CustomerAccountNumber,
     CustomerAddress,
     BeneficiaryName,
+    BeneficiaryAccountNumber,
     BeneficiaryAddress,
     BeneficiaryOccupation,
     ReceivingBank,
     BeneficiaryBank,
     IntermediaryBank,
-    CreditUnderAdviceAccountNumber,
     Output,
 ];
 
@@ -119,7 +122,13 @@ const percentageComplete = computed(() => {
     return ((stage.value) / stages.length) * 100;
 });
 
+const isNotFirstOrLastPage = computed(() => {
+    if (stage.value === 0 || stage.value === stages.length - 1) return false;
+    return true;
+});
+
 const next = () => {
+    if (stage.value === 11 && state.sameRecievingAndBenificiaryBank == true) stage.value = stage.value + 1;
     stage.value = stage.value + 1;
 };
 </script>

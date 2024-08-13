@@ -7,7 +7,10 @@
             <h1>Beneficiary Address</h1>
             <p class="text-subtitle-1 mb-4">Enter the full address for the person who will be receiving this wire.</p>
 
-            <v-form v-model="isValid">
+            <v-form
+                @submit.prevent="(e) => e.preventDefault()"
+                v-model="isValid"
+            >
                 <v-text-field
                     v-model="addressLine1"
                     :rules="[rules.required]"

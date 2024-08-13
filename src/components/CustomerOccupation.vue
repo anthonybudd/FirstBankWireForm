@@ -6,7 +6,10 @@
         <v-card-text>
             <h1>Your Occupation</h1>
             <p class="text-subtitle-1 mb-4">Enter your occupation or place of work.</p>
-            <v-form v-model="isValid">
+            <v-form
+                @submit.prevent="(e) => e.preventDefault()"
+                v-model="isValid"
+            >
                 <v-text-field
                     v-model="customerOccupation"
                     placeholder="Your Occupation"

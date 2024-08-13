@@ -8,7 +8,10 @@
             <p class="text-subtitle-1 mb-4">
                 Enter the amount in USD that you would like to send in this wire transfer.
             </p>
-            <v-form v-model="isValid">
+            <v-form
+                @submit.prevent="(e) => e.preventDefault()"
+                v-model="isValid"
+            >
                 <v-text-field
                     v-model="amount"
                     placeholder="100.00"
